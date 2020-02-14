@@ -170,7 +170,7 @@ void free_game(Game* game) {
 
 }
 
-int intersection(Ez_image *Im,Vector u, MyRectangle r) {
+int intersection(Ez_image *Im,Vector u, MyRectangle r) { //Pixel perfect collision, on vérifie si l'un des pixels non transparent touche le rectangle du tuyau ou du sol
 	int x,y;
 	for (x=0;x<Im->width;x++) {
 		for(y=0;y<Im->height;y++) {
@@ -204,7 +204,9 @@ int game_over(Game* game) {
 	floor.width = game->floor.size.x;
 	floor.height = game->floor.size.y;
 	
-	if ((intersection(game->bird.images[game->bird.current_image],game->bird.position,tube_top) || intersection(game->bird.images[game->bird.current_image],game->bird.position,tube_bottom) || intersection(game->bird.images[game->bird.current_image],game->bird.position,floor)) == 1)
+	//Si l'oiseau touche le tube top ou le tube bottom ou le sol, alors c'est game over
+	if ((intersection(game->bird.images[game->bird.current_image],game->bird.position,tube_top) || intersection(game->bird.images[game->bird.current_image],
+		game->bird.position,tube_bottom) || intersection(game->bird.images[game->bird.current_image],game->bird.position,floor)) == 1)
 		return 1;	
     return 0;
 }
